@@ -1,6 +1,19 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
+(package! org-appear
+  :recipe (:host github :repo "awth13/org-appear"))
+
+;; Adjusts the size of Emacs windows automatically using the golden ratio principle.
+(package! golden-ratio)
+
+(package! vertico)
+(package! posframe)
+(package! vertico-posframe)
+
+;; ChatGPT package
+(package! c3po
+  :recipe (:host github :repo "d1egoaz/c3po.el"))
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
