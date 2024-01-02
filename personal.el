@@ -13,30 +13,68 @@
       (goto-char (point-max))  ;; Moves the cursor to the end of the *scratch* buffer
       (insert "\n" selected-text))))  ;; Inserts the selected text at the end
 
-(defun open-predefined-files-in-dired ()
-  "Open a Dired buffer with predefined files selected."
+;; copy functions
+(defun copy-line-or-region-up ()
+  "Copy the current line or region upwards."
   (interactive)
-  (dired (cons default-directory '("file1.txt" "file2.txt"))))
+  (if (use-region-p)
+      (progn
+        ;; Copy and paste region
+        (kill-ring-save (region-beginning) (region-end))
+        (goto-char (region-beginning))
+        (yank)
+        (exchange-point-and-mark))
+    ;; Copy and paste line
+    (progn
+      (kill-ring-save (line-beginning-position) (line-beginning-position 2))
+      (beginning-of-line)
+      (yank))))
 
-(defun insert-custom-current-date-time ()
-  "Insert the current date and time."
+(defun copy-line-or-region-down ()
+  "Copy the current line or region downwards."
   (interactive)
-  (insert (format-time-string "%Y-%m-%d %H:%M:%S")))
+  (if (use-region-p)
+      (let ((start (region-beginning))
+            (end (region-end)))
+        ;; Copy and paste region
+        (kill-ring-save start end)
+        (goto-char end)
+        (newline)
+        (yank)
+        (exchange-point-and-mark))
+    ;; Copy and paste line without adding an extra newline
+    (let ((start (line-beginning-position))
+          (end (line-end-position)))
+      (kill-ring-save start end)
+      (end-of-line)
+      (newline)
+      (yank)
+      ;; Move cursor to the beginning of the original line
+      (goto-char start))))
 
-(defun append-output-of-interactive-command-to-scratch (command)
-  "Run an interactive COMMAND and append its output to the *scratch* buffer."
-  (interactive (list (read-command "Command to execute: ")))
-  (let ((output-buffer (generate-new-buffer "*Command Output*")))
-    ;; Run the command and capture its output
-    (with-output-to-temp-buffer output-buffer
-      (save-window-excursion
-        (call-interactively command)))
-    ;; Append the captured output to the *scratch* buffer
-    (with-current-buffer output-buffer
-      (let ((output (buffer-string)))
-        (with-current-buffer (get-buffer-create "*scratch*")
-          (goto-char (point-max))
-          (insert "\n" output)
-          (display-buffer (current-buffer)))))
-    (kill-buffer output-buffer)
-    (message "Output appended to *scratch* buffer")))
+;; function to toggle sly mrepl
+(defun toggle-sly-mrepl ()
+  "Toggle the visibility of the sly-mrepl buffer. Remove window split if necessary."
+  (interactive)
+  (let ((repl-buffer (sly-mrepl--find-buffer)))
+    (if (and repl-buffer (get-buffer-window repl-buffer))
+        (if (= 1 (length (window-list)))
+            (bury-buffer repl-buffer)
+          (delete-window (get-buffer-window repl-buffer)))
+      (when repl-buffer
+        (pop-to-buffer repl-buffer)))))
+
+;; Copy a line
+(defun copy-current-line ()
+  "Copy the current line to the Emacs kill ring."
+  (interactive)
+  (kill-ring-save (line-beginning-position) (line-beginning-position 2))
+  (message "Line copied"))
+
+(defun my/org-mode-golden-ratio-hook ()
+  (golden-ratio-mode -1))
+(add-hook 'org-mode-hook #'my/org-mode-golden-ratio-hook)
+
+(defun my/after-org-mode-golden-ratio-hook ()
+  (golden-ratio-mode 1))
+(add-hook 'org-mode-hook #'my/after-org-mode-golden-ratio-hook)

@@ -7,9 +7,14 @@
 ;; Adjusts the size of Emacs windows automatically using the golden ratio principle.
 (package! golden-ratio)
 
-(package! vertico)
-(package! posframe)
+;; (package! vertico)
+;; (package! posframe)
 (package! vertico-posframe)
+(package! centaur-tabs)
+(package! all-the-icons-dired)
+(package! sly)
+
+(package! jupyter)
 
 ;; ChatGPT package
 (package! c3po

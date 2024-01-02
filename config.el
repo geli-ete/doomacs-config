@@ -41,7 +41,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-feather-dark)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -59,9 +59,11 @@
 (load! "org-roam.el")
 (load! "lsp.el")
 (load! "org-babel.el")
+(load! "centaur-tabs.el")
 (load! "personal.el")
 (load! "custom-keybindings.el")
 (load! "extra.el")
+(load! "dired.el")
 
 ;; (load! "my-org-roam-config.el" "subdirectory/") ; If in a subdirectory
 

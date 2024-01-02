@@ -2,6 +2,11 @@
 ;; Remove default doom banner at startup
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-banner)
 
+;; SLY (Sylvester the Cat's Common Lisp IDE)
+(after! sly
+  ;; Set the default Lisp interpreter to a Roswell-managed implementation
+  (setq inferior-lisp-program "ros -Q run"))
+
 (require 'c3po)
 (setq c3po-api-key "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")
 
@@ -18,15 +23,18 @@
         org-appear-autosubmarkers t))
 
 ;; adjusts the size of Emacs windows automatically using the golden ratio principle
-(use-package golden-ratio
+(use-package! golden-ratio
   :config
   (golden-ratio-mode 1)
+  (setq golden-ratio-exclude-modes '("org-mode"
+                                     ;; Add other modes if necessary
+                                     ))
   ;; Optional configurations go here. For example:
-  ;; (setq golden-ratio-adjust-factor .8
-  ;;       golden-ratio-wide-adjust-factor .8)
+  (setq golden-ratio-adjust-factor .8
+        golden-ratio-wide-adjust-factor .8)
   )
 
-(use-package vertico
+(use-package! vertico
   :init
   (vertico-mode)
   :config
