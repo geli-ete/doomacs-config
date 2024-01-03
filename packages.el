@@ -6,7 +6,7 @@
 
 ;; Adjusts the size of Emacs windows automatically using the golden ratio principle.
 (package! golden-ratio)
-
+(package! org-superstar)
 ;; (package! vertico)
 ;; (package! posframe)
 (package! vertico-posframe)

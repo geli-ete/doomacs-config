@@ -10,12 +10,6 @@
 ;; Set `org-agenda-files'
 ;; `org-agenda' Setup After Package Load
 (after! org
-  ;; Replace list hyphen with dot
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 ()
-                                  (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-span 'week)
   (setq org-agenda-start-with-log-mode t)

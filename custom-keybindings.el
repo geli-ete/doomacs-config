@@ -8,6 +8,15 @@
 
 (map! :leader
       :desc "Central Hub" "F" #'my-favorite-file)
+;; Set keybindings for Org mode in Doom Emacs
+(after! org
+  (map! :map org-mode-map
+        "C-c C-e" #'efs/ielm-send-line-or-region
+        ;;"C-c E"   #'efs/show-ielm)
+        ))
+
+;; Global keybinding
+(map! "C-c E" #'efs/toggle-ielm)
 
 (after! org
   (map! :map org-mode-map

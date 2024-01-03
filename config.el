@@ -55,6 +55,7 @@
 ;; change `org-directory'. It must be set before org loads!
 ;; Setting `org-roam' directory using `org-roam-directory'.
 
+(load! "org-mode.el")
 (load! "org-agenda.el")
 (load! "org-roam.el")
 (load! "lsp.el")
@@ -64,7 +65,6 @@
 (load! "custom-keybindings.el")
 (load! "extra.el")
 (load! "dired.el")
-
 ;; (load! "my-org-roam-config.el" "subdirectory/") ; If in a subdirectory
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an

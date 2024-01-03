@@ -26,9 +26,9 @@
 (use-package! golden-ratio
   :config
   (golden-ratio-mode 1)
-  (setq golden-ratio-exclude-modes '("org-mode"
-                                     ;; Add other modes if necessary
-                                     ))
+  ;;(setq golden-ratio-exclude-modes '("org-mode"
+  ;; Add other modes if necessary
+  ;;                                  ))
   ;; Optional configurations go here. For example:
   (setq golden-ratio-adjust-factor .8
         golden-ratio-wide-adjust-factor .8)
@@ -41,3 +41,41 @@
   (use-package vertico-posframe
     :config
     (vertico-posframe-mode 1)))
+
+;;; ielm setup
+;; Function to send line or region to ielm
+(defun efs/ielm-send-line-or-region ()
+  (interactive)
+  (unless (use-region-p)
+    (forward-line 0)
+    (set-mark-command nil)
+    (forward-line 1))
+  (backward-char 1)
+  (let ((text (buffer-substring-no-properties (region-beginning)
+                                              (region-end))))
+    (with-current-buffer (get-buffer-create "*ielm*")
+      (insert text)
+      (ielm-send-input))
+    (deactivate-mark)))
+
+;; Function to show ielm
+(defun efs/show-ielm ()
+  (interactive)
+  (select-window (split-window-vertically -10))
+  (ielm)
+  (text-scale-set 1))
+
+;;; Add this to your config.el in your Doom Emacs directory
+
+(defun efs/toggle-ielm ()
+  "Toggle ielm window."
+  (interactive)
+  (if (and (get-buffer "*ielm*")               ;; Check if "*ielm*" buffer exists
+           (get-buffer-window "*ielm*" 'visible)) ;; Check if visible
+      (if (eq (current-buffer) (get-buffer "*ielm*"))
+          (delete-window) ;; If ielm is current buffer, delete the window
+        (pop-to-buffer "*ielm*")) ;; Else switch to the ielm buffer
+    (progn
+      (select-window (split-window-vertically -10))
+      (ielm)
+      (text-scale-set 1))))
