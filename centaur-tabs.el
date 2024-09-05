@@ -4,6 +4,7 @@
   :init
   (setq centaur-tabs-enable-key-bindings t)
   :config
+  (centaur-tabs-mode t)
   (setq centaur-tabs-style "bar"
         centaur-tabs-height 32
         centaur-tabs-set-icons t

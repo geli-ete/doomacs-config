@@ -4,8 +4,11 @@
 (package! org-appear
   :recipe (:host github :repo "awth13/org-appear"))
 
-;; Adjusts the size of Emacs windows automatically using the golden ratio principle.
-(package! golden-ratio)
+
+(package! geli-mode
+  :recipe (:local-repo "~/geli-mode"
+           :files ("*.el")))
+
 (package! org-superstar)
 ;; (package! vertico)
 ;; (package! posframe)
@@ -13,8 +16,11 @@
 (package! centaur-tabs)
 (package! all-the-icons-dired)
 (package! sly)
-
+(package! pdf-tools)
 (package! jupyter)
+
+(package! nov)
+(package! djvu)
 
 ;; ChatGPT package
 (package! c3po
@@ -23,6 +29,11 @@
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
 
+;; `themes'
+(package! spacemacs-theme)
+(package! gruber-darker-theme)
+(package! color-theme-sanityinc-tomorrow)  ;; Package for Tomorrow themes
+(package! material-theme)
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;; (package! some-package)
