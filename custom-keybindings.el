@@ -7,8 +7,9 @@
 ;;       :desc "Org capture" "X" #'org-capture)
 
 (map! :leader
+      :desc "Personal Journal" "J" #'my-personal-journal
       :desc "Central Hub" "F" #'my-favorite-file
-      :desc "Study Log" "J" #'my-study-log-file)
+      :desc "Study Log" "S" #'my-study-log-file)
 ;; Set keybindings for Org mode in Doom Emacs
 (after! org
   (map! :map org-mode-map
@@ -66,3 +67,6 @@
 (global-set-key (kbd "M-C-/") 'dabbrev-completion)
 
 (global-set-key (kbd "C-c u") 'org-toggle-narrow-to-subtree)
+
+(global-set-key (kbd "C-z") 'undo-fu-only-undo)
+(global-set-key (kbd "C-S-z") 'undo-fu-only-redo)

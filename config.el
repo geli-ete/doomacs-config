@@ -27,10 +27,10 @@
 ;;       doom-variable-pitch-font (font-spec :family "Droid Sans" :size 24))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 23 :weight 'medium)
 ;;       doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 24))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 23 :weight 'medium)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 18 :weight 'medium)
       doom-italic-font (font-spec :family "JetBrains Mono" :slant 'italic)
       doom-bold-font (font-spec :family "JetBrains Mono" :weight 'bold)
-      doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 24))
+      doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 19))
 
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -41,7 +41,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'spacemacs-dark)
+(setq doom-theme 'doom-oksolar-dark)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.

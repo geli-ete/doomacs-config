@@ -1,46 +1,29 @@
+
 ;;; org-mode.el -*- lexical-binding: t; -*-
 
-;; Configure org-superstar
-;;; Add this to your config.el in your Doom Emacs directory
-
 (after! org
-
-  ;;set tags to the right
+  ;; Configure tags alignment (optional)
   ;; (setq org-tags-column 80)
   ;; (add-hook 'window-configuration-change-hook
-  ;;           (lambda ()
-  ;;             (setq org-tags-column (- (window-width) 20))))
+  ;;           (lambda () (setq org-tags-column (- (window-width) 20))))
 
-  ;; Add the function to Org mode hook
-  (add-hook 'org-mode-hook 'geli/org-mode-setup)
+  ;; Org mode setup function
+  (defun geli/org-mode-setup ()
+    (display-line-numbers-mode 0)
+    (org-superstar-mode 1))
 
-  ;; Enable org-superstar and configure bullet styles
-  (add-hook 'org-mode-hook (lambda ()
-                             (org-superstar-mode 1)))
+  ;; Enable `geli/org-mode-setup` on `org-mode-hook`
+  (add-hook 'org-mode-hook #'geli/org-mode-setup)
 
-  (setq org-superstar-prettify-item-bullets t)
+  ;; Configure org-superstar
+  (setq org-superstar-prettify-item-bullets t
+        org-superstar-headline-bullets-list '("✸" "✿" "◉" "○" "▶")
+        org-superstar-item-bullet-alist '((?* . "•") (?+ . "➤") (?- . "—"))
+        org-superstar-leading-bullet " "
+        org-superstar-cycle-headline-bullets nil
+        org-hide-leading-stars t)
 
-  ;; Set the bullet list symmbols
-  (setq org-superstar-headline-bullets-list '("✸" "✿" "◉" "○" "▶"))
-
-  ;; Use different bullets for different headline levels
-  (setq org-superstar-item-bullet-alist '((?* . "•") (?+ . "➤") (?- . "—")))
-
-  ;; Prevent leading stars from being shown (cleaner look)
-  (setq org-superstar-leading-bullet " ")
-
-  ;; Prevent Org from using different bullets for low-level headlines
-  (setq org-superstar-cycle-headline-bullets nil)
-
-  ;; Optional: Hide leading stars in the buffer
-  (setq org-hide-leading-stars t)
-
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-
-  ;; Set custom heading sizes
+  ;; Customize heading levels with specific fonts
   (custom-set-faces!
     `(org-level-1 :inherit outline-1 :font "Cantarell" :weight regular :height 1.10)
     `(org-level-2 :inherit outline-2 :font "Cantarell" :weight regular :height 1.05)
@@ -50,7 +33,8 @@
     `(org-level-6 :inherit outline-6 :font "Cantarell" :weight regular :height 1.1)
     `(org-level-7 :inherit outline-7 :font "Cantarell" :weight regular :height 1.1)
     `(org-level-8 :inherit outline-8 :font "Cantarell" :weight regular :height 1.1))
-  ;; Configure fixed-pitch faces
+
+  ;; Fixed-pitch faces for specific Org elements
   (custom-set-faces!
     `(org-table :inherit fixed-pitch)
     `(org-formula :inherit fixed-pitch)
@@ -61,17 +45,12 @@
     `(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
     `(org-checkbox :inherit fixed-pitch))
 
-  ;;Customize visual-fill-column
+  ;; Visual fill column configuration
   (use-package! visual-fill-column
-    :hook (org-mode . dw/org-mode-visual-fill))
-
-  (defun dw/org-mode-visual-fill ()
-    (setq visual-fill-column-width 120
-          visual-fill-column-center-text t)
-    (visual-fill-column-mode 1))
-
+    :hook (org-mode . dw/org-mode-visual-fill)
+    :config
+    (defun dw/org-mode-visual-fill ()
+      (setq visual-fill-column-width 120
+            visual-fill-column-center-text t)
+      (visual-fill-column-mode 1)))
   )
-
-;; Function to disable line numbers
-(defun geli/org-mode-setup ()
-  (display-line-numbers-mode 0))

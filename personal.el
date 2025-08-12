@@ -1,5 +1,10 @@
 ;;; personal.el -*- lexical-binding: t; -*-
 
+(defun my-personal-journal ()
+  "Open my personal journal."
+  (interactive)
+  (find-file "~/Dropbox/org-files/roam/20250805162255-personal_journal.org"))
+
 (defun my-favorite-file ()
   "Open my favorite file."
   (interactive)

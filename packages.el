@@ -5,9 +5,9 @@
   :recipe (:host github :repo "awth13/org-appear"))
 
 
-(package! geli-mode
-  :recipe (:local-repo "~/geli-mode"
-           :files ("*.el")))
+;;(package! geli-mode
+;;  :recipe (:local-repo "~/geli-mode"
+;;           :files ("*.el")))
 
 (package! org-superstar)
 ;; (package! vertico)
@@ -22,9 +22,8 @@
 (package! nov)
 (package! djvu)
 
-;; ChatGPT package
-(package! c3po
-  :recipe (:host github :repo "d1egoaz/c3po.el"))
+(package! undo-fu)
+
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
