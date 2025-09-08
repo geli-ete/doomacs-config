@@ -1,9 +1,12 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
+(package! exec-path-from-shell)
 (package! org-appear
   :recipe (:host github :repo "awth13/org-appear"))
 
+(package! lsp-tailwindcss) ; Tailwind CSS LSP (optional)
+(package! prettier)       ; Prettier minor-mode (optional)
 
 ;;(package! geli-mode
 ;;  :recipe (:local-repo "~/geli-mode"
