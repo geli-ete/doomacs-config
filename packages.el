@@ -8,6 +8,10 @@
 (package! lsp-tailwindcss) ; Tailwind CSS LSP (optional)
 (package! prettier)       ; Prettier minor-mode (optional)
 
+(package! org-roam-ui)
+;; org-roam-ui requires websocket at runtime; pinning not necessary typically
+(package! websocket)
+
 ;;(package! geli-mode
 ;;  :recipe (:local-repo "~/geli-mode"
 ;;           :files ("*.el")))

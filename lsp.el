@@ -4,6 +4,9 @@
 ;; Core LSP (shared)
 ;; ------------------------------------------------------------
 (after! lsp-mode
+  ;; Optional perf optimization (less consing)
+  (setq lsp-use-plists t)
+
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
         lsp-headerline-breadcrumb-enable t
@@ -14,12 +17,14 @@
         lsp-enable-file-watchers t
         lsp-log-io nil
         lsp-semantic-tokens-enable t)
+
+  ;; Add common noisy dirs to file-watch ignore list (idempotent)
   (dolist (dir '("[/\\\\]node_modules\\'"
                  "[/\\\\]dist\\'"
                  "[/\\\\]build\\'"
                  "[/\\\\]out\\'"
                  "[/\\\\]vendor\\'"))
-    (add-to-list 'lsp-file-watch-ignored-directories dir)))
+    (cl-pushnew dir lsp-file-watch-ignored-directories :test #'equal)))
 
 ;; Start LSP for common modes (TS/JS handled below, custom)
 (dolist (hk '(go-mode-hook go-ts-mode-hook
@@ -44,24 +49,20 @@
 
 ;; ------------------------------------------------------------
 ;; TypeScript / TSX / JS
-;; Use ts-ls locally, ts-ls-tramp over TRAMP.
-;; Keep ESLint for diagnostics only; Prettier handles formatting locally.
+;; Use a single client (ts-ls) for both local & TRAMP.
+;; Keep ESLint for diagnostics; Prettier handles local formatting (Apheleia).
 ;; ------------------------------------------------------------
 (with-eval-after-load 'lsp-mode
-  ;; Make sure we use ts-ls (not vtsls) to match the available TRAMP clients
+  ;; Force typescript-language-server; avoid deno/vtsls/etc unless you opt in.
   (setq lsp-clients-typescript-server "ts-ls"
-        ;; Silence extras you don't use
         lsp-disabled-clients
         '(deno-ls jsts-ls emmet-ls graphql-lsp eslint
           deno-ls-tramp jsts-ls-tramp emmet-ls-tramp graphql-lsp-tramp eslint-tramp)))
 
 (defun +my/lsp-setup-ts-js ()
-  ;; Pick client based on local/remote buffer
-  (setq-local lsp-enabled-clients
-              (list (if (file-remote-p default-directory) 'ts-ls-tramp 'ts-ls)))
-  ;; Formatting strategy:
-  ;; - Local: Prettier via Apheleia (default below)
-  ;; - Remote (TRAMP): use LSP formatting
+  ;; One client works everywhere (local & remote)
+  (setq-local lsp-enabled-clients '(ts-ls))
+  ;; Remote (TRAMP) -> format with LSP; Local -> Prettier via Apheleia
   (setq-local +format-with-lsp (file-remote-p default-directory))
   (lsp-deferred))
 
@@ -72,6 +73,8 @@
 (with-eval-after-load 'lsp-mode
   (require 'lsp-eslint)
   (setq lsp-eslint-format nil
+        ;; Adjust for monorepos if needed:
+        ;; lsp-eslint-working-directories [ "./" "packages/*" "apps/*" ]
         lsp-eslint-working-directories ["./"]))
 
 ;; ------------------------------------------------------------
@@ -120,3 +123,4 @@
 (after! rustic
   (setq rustic-format-on-save t))
 (use-package! lsp-toml :after lsp-mode)
+
