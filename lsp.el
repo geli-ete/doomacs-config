@@ -3,9 +3,11 @@
 ;; ------------------------------------------------------------
 ;; Core LSP (shared)
 ;; ------------------------------------------------------------
+;; Use hash tables everywhere with LSP/JSON
+(setq lsp-use-plists nil)
+
 (after! lsp-mode
   ;; Optional perf optimization (less consing)
-  (setq lsp-use-plists t)
 
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
@@ -100,6 +102,9 @@
   ;; Prettier (local)
   (setf (alist-get 'prettier apheleia-formatters)
         '("prettier" "--stdin-filepath" filepath))
+  ;; Don’t auto-format in merge/ediff/smerge/magit/git-commit buffers
+  (dolist (h '(ediff-prepare-buffer-hook smerge-mode-hook magit-status-mode-hook git-commit-setup-hook))
+    (add-hook h (lambda () (when (bound-and-true-p apheleia-mode) (apheleia-mode -1)))))
   ;; Local TS/JS → Prettier; remote is switched to LSP by +format-with-lsp t
   (dolist (pair '((tsx-ts-mode        . prettier)
                   (typescript-ts-mode . prettier)
@@ -124,3 +129,34 @@
   (setq rustic-format-on-save t))
 (use-package! lsp-toml :after lsp-mode)
 
+;; ~/.doom.d/config.el
+(setq treesit-language-source-alist
+      '((tsx        "https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src")))
+
+;; ~/.doom.d/config.el
+(use-package! treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)  ;; or 't to install silently
+  :config
+  (global-treesit-auto-mode))
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+
+(dolist (lang '(typescript))
+  (unless (treesit-language-available-p lang)
+    (ignore-errors (treesit-install-language-grammar lang))))
+
+;; Use native JSON defaults that lsp-mode expects
+(setq json-object-type 'hash-table
+      json-array-type 'vector
+      json-false :json-false)
+
+(with-eval-after-load 'lsp-mode
+  ;; Point typescript-language-server at the workspace’s tsserver if available.
+  ;; Adjust the path if your node_modules is not at project root.
+  (let ((tss (expand-file-name "node_modules/typescript/lib/tsserver.js"
+                               (lsp-workspace-root default-directory))))
+    (when (file-exists-p tss)
+      (setq lsp-clients-typescript-server-args
+            (list "--tsserver-path" tss)))))

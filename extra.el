@@ -38,10 +38,6 @@
   )
 
 
-;; Projectile related
-(after! projectile
-  (add-to-list 'projectile-globally-ignored-directories "node_modules"))
-
 (after! tramp
   (setq tramp-default-method "ssh"
         tramp-verbose 1
@@ -76,7 +72,8 @@
 ;; Projectile: avoid heavy indexing remotely
 (after! projectile
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
-  (setq projectile-auto-discover nil     ; don’t auto-scan drives
+  (setq projectile-verbose t
+        projectile-auto-discover nil     ; don’t auto-scan drives
         projectile-enable-caching t))
 
 ;; Dired: don’t auto-revert remote buffers (cuts background pings)

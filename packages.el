@@ -2,6 +2,10 @@
 ;;; $DOOMDIR/packages.el
 
 (package! exec-path-from-shell)
+
+;; ~/.doom.d/packages.el
+(package! treesit-auto)
+
 (package! org-appear
   :recipe (:host github :repo "awth13/org-appear"))
 

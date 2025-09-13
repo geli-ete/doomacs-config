@@ -8,16 +8,12 @@
      "38c0c668d8ac3841cb9608522ca116067177c92feeabc6f002a27249976d7434" default))
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(org-agenda-files
-   '("/Users/geliete/Dropbox/org-files/roam/20250808084917-task_planner.org"
-     "/Users/geliete/Dropbox/org-files/agenda/school.org"
-     "/Users/geliete/Dropbox/org-files/agenda/personal.org"
-     "/Users/geliete/Dropbox/org-files/agenda/projects.org"
-     "/Users/geliete/Dropbox/org-files/agenda/journal.org"
-     "/Users/geliete/Dropbox/org-files/agenda/tasks.org"
+   '("~/Dropbox/org-files/roam/daily/2025-09-11.org"
+     "/Users/geliete/Dropbox/org-files/roam/20250908165807-knowledge_base_compilation.org"
      "/Users/geliete/Dropbox/org-files/roam/20230512043719-habits.org"
      "/Users/geliete/Dropbox/org-files/roam/20230428134120-birthdays.org"
      "/Users/geliete/Dropbox/org-files/roam/Inbox.org"
-     "/Users/geliete/Dropbox/org-files/roam/20230512164825-private.org"))
+     "/Users/geliete/Dropbox/org-files/roam/inbox.org"))
  '(warning-suppress-types '((emacs) (defvaralias))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
