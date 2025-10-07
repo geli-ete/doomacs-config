@@ -88,3 +88,9 @@
        :desc "Graph (this note, 1-hop)" "1" #'+my/org-roam-graph-1hop
        :desc "Graph (this note, 2-hop)" "2" #'+my/org-roam-graph-2hop
        :desc "Graph (prompt/full)"      "g" #'org-roam-graph))
+
+;; Use LSP directly for "go to definition"
+(after! lsp-mode
+  (map! :leader
+        :desc "Go to definition (LSP)"
+        :n "gd" #'lsp-find-definition))

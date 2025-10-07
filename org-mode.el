@@ -1,4 +1,3 @@
-
 ;;; org-mode.el -*- lexical-binding: t; -*-
 
 (after! org
@@ -17,11 +16,12 @@
 
   ;; Configure org-superstar
   (setq org-superstar-prettify-item-bullets t
-        org-superstar-headline-bullets-list '("✸" "✿" "◉" "○" "▶")
-        org-superstar-item-bullet-alist '((?* . "•") (?+ . "➤") (?- . "—"))
-        org-superstar-leading-bullet " "
+        org-superstar-headline-bullets-list '(?✸ ?✿ ?◉ ?○ ?▶)
+        org-superstar-item-bullet-alist '((?* . ?•) (?+ . ?➤) (?- . ?—))
+        org-superstar-leading-bullet ?\s
         org-superstar-cycle-headline-bullets nil
         org-hide-leading-stars t)
+
 
   ;; Customize heading levels with specific fonts
   (custom-set-faces!

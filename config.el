@@ -32,6 +32,13 @@
       doom-bold-font (font-spec :family "JetBrains Mono" :weight 'bold)
       doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 19))
 
+(setq gc-cons-threshold (* 128 1024 1024)
+      read-process-output-max (* 4 1024 1024)
+      fast-but-imprecise-scrolling t
+      jit-lock-defer-time 0.05
+      redisplay-skip-fontification-on-input t)
+(global-so-long-mode 1)
+
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to

@@ -130,8 +130,8 @@ Filters out directories, remote paths, and non-.org files for speed."
     (setq org-agenda-files (mapcar #'file-truename clean))))
 
 ;; Run now + nightly
-(my/org-roam-refresh-agenda-list)
-(run-at-time "00:01" 86400 #'my/org-roam-refresh-agenda-list)
+;;(my/org-roam-refresh-agenda-list)
+;;(run-at-time "00:01" 86400 #'my/org-roam-refresh-agenda-list)
 
 (defun my/org-roam-project-finalize-hook ()
   (remove-hook 'org-capture-after-finalize-hook #'my/org-roam-project-finalize-hook)
@@ -326,3 +326,4 @@ Filters out directories, remote paths, and non-.org files for speed."
               (org-archive-subtree))))
 
 ;; End of file
+

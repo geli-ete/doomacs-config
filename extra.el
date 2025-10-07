@@ -1,4 +1,5 @@
 ;;; extra.el -*- lexical-binding: t; -*-
+
 ;; Remove default doom banner at startup
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-banner)
 
@@ -31,18 +32,12 @@
     :config
     (vertico-posframe-mode 1)))
 
-(use-package! org-noter
-  :after org
-  :config
-  ;; Your org-noter configuration goes here
-  )
+;; (use-package! org-noter
+;;   :after org
+;;   :config
+;;   ;; Your org-noter configuration goes here
+;;   )
 
-
-(after! tramp
-  (setq tramp-default-method "ssh"
-        tramp-verbose 1
-        remote-file-name-inhibit-cache nil
-        tramp-use-ssh-controlmaster-options t))
 
 ;; Make Treemacs less chatty on refresh (minor polish)
 (with-eval-after-load 'treemacs
@@ -56,12 +51,6 @@
 ;; yasnippets
 (after! yasnippet
   (setq yas-snippet-dirs '("~/.doom.d/snippets" "~/.emacs.d/snippets")))
-
-;; In your mac's ~/.doom.d/config.el
-(after! tramp
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path) ; include remote user's PATH
-  (add-to-list 'tramp-remote-path "~/.local/bin")
-  (add-to-list 'tramp-remote-path "~/go/bin"))
 
 ;; Disable VC backends for remote files (big win)
 (add-hook 'find-file-hook
@@ -82,8 +71,14 @@
             (when (file-remote-p default-directory)
               (auto-revert-mode -1))))
 
-;; ~/.doom.d/config.el (on your Mac)
-(after! tramp
-  (setq tramp-default-method "ssh")
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-  (add-to-list 'tramp-remote-path "/home/geliete/.nvm/versions/node/v20.19.0/bin"))
+
+;; Latex
+;; use latexmk so it runs as many passes as needed
+(after! ox-latex
+  (setq org-latex-pdf-process
+        '("latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -file-line-error %f")))
+
+;; BibTeX/Biber: run the bibliography tool between LaTeX passes.
+(after! ox-latex
+  (setq org-latex-pdf-process
+        '("latexmk -pdf -bibtex -shell-escape -interaction=nonstopmode -halt-on-error -file-line-error %f")))
